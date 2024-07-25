@@ -51,8 +51,8 @@ with st.sidebar:
                                  help="You can create a free Groq API-key from https://console.groq.com/keys")
 
     # LLM Radio
-    llm_option = st.radio("Select LLM (3.1 is the newer version from July 2024):", ["Llama-3.1-8B", "Llama-3.1-70B", "Llama-3-8B", "Llama-3-70B"],
-                          captions=["Smaller and faster", "Bigger and more versatile"])
+    llm_option = st.radio("Select LLM (3.1 is the latest version from July 2024):", ["Llama-3.1-8B", "Llama-3.1-70B", "Llama-3-8B", "Llama-3-70B"],
+                          captions=["New, smaller and faster", "New, bigger and more versatile"])
 
     # Embedding selection
     #embedding_option = st.selectbox("Choose embedding setup:", ("Nomic + GPT (Default)", "Nomic + Llama3"),
