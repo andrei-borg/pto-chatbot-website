@@ -7,7 +7,7 @@ from llama_index.core.tools import QueryEngineTool
 from llama_index.agent.openai import OpenAIAgent
 from llama_index.core.memory import ChatMemoryBuffer
 from llama_index.core.storage.chat_store import SimpleChatStore
-from llama_index.postprocessor.flag_embedding_reranker import FlagEmbeddingReranker
+from llama_index.postprocessor.colbert_rerank import ColbertRerank
 import streamlit as st
 import chromadb
 
@@ -51,7 +51,7 @@ with st.sidebar:
                                  help="You can create a free Groq API-key from https://console.groq.com/keys")
 
     # LLM Radio
-    llm_option = st.radio("Select LLM:", ["Llama-3.1-8B", "Llama-3.1-70B"],
+    llm_option = st.radio("Select LLM (3.1 is the newer version from July 2024):", ["Llama-3.1-8B", "Llama-3.1-70B", "Llama-3-8B", "Llama-3-70B"],
                           captions=["Smaller and faster", "Bigger and more versatile"])
 
     # Embedding selection
@@ -76,14 +76,22 @@ with st.sidebar:
                 #elif llm_option == "Llama-3.1-70B":
                 #    st.session_state["llm_model"] = "llama-3.1-70b-versatile"
                 
-                st.session_state["reranker"] = FlagEmbeddingReranker(
-                    top_n=4,
-                    model="BAAI/bge-reranker-large",
-                )
+                st.session_state["reranker"] = ColbertRerank(
+                        top_n=4,
+                        model="colbert-ir/colbertv2.0",
+                        tokenizer="colbert-ir/colbertv2.0",
+                        keep_retrieval_score=True,
+                    )
+
+                
                 if llm_option == "Llama-3.1-8B":
                     st.session_state["llm_model"] = "llama-3.1-8b-instant"
-                else:
+                elif llm_option == "Llama-3.1-70B":
                     st.session_state["llm_model"] = "llama-3.1-70b-versatile"
+                elif llm_option == "Llama-3-8B":
+                    st.session_state["llm_model"] = "llama3-8b-8192"
+                else:
+                    st.session_state["llm_model"] = "llama3-70b-8192"
 
                 st.success(":green[Settings saved!]")
 
