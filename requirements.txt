@@ -176,7 +176,7 @@ llama-index-readers-file==0.1.30
 llama-index-readers-llama-parse==0.1.6
 llama-index-vector-stores-chroma==0.1.10
 llama-parse==0.4.7
-llama_cpp_python==0.2.76
+#llama_cpp_python==0.2.76
 llvmlite==0.43.0
 locket==1.0.0
 markdown-it-py==3.0.0
