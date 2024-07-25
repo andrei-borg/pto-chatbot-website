@@ -11,6 +11,10 @@ from llama_index.postprocessor.colbert_rerank import ColbertRerank
 import streamlit as st
 import chromadb
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 st.write("## PTO Mack Chatbot")
 
 if "llm_model" not in st.session_state:
