@@ -15,8 +15,6 @@ from llama_index.postprocessor.colbert_rerank import ColbertRerank
 import streamlit as st
 import chromadb
 
-
-
 st.write("## PTO Mack Chatbot")
 
 if "llm_model" not in st.session_state:
@@ -83,7 +81,7 @@ with st.sidebar:
                 #    st.session_state["llm_model"] = "llama-3.1-70b-versatile"
                 
                 st.session_state["reranker"] = ColbertRerank(
-                        top_n=4,
+                        top_n=3,
                         model="colbert-ir/colbertv2.0",
                         tokenizer="colbert-ir/colbertv2.0",
                         keep_retrieval_score=True,
@@ -116,8 +114,8 @@ if prompt := st.chat_input("Type question here"):
                                                            node_postprocessor=[st.session_state["reranker"]])
 
             tool = QueryEngineTool.from_defaults(query_engine=query_engine,
-                                                 name="Mack_Power_Take_Off_engine",
-                                                 description="This query engine stores parameter code descriptions of Mack Power Take Off (PTO) instructions.")
+                                                 name="Mack_Power_Take_Off_parameter_engine",
+                                                 description="This query engine stores parameter code descriptions of Mack Power Take Off (PTO) pdf instructions.")
             
             agent = OpenAIAgent.from_tools(tools=[tool],
                                            memory=st.session_state["memory"],
